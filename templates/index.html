@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Machine Learning 1A</title>
+  <link rel="stylesheet" href="/static/vendor/bootstraptable/bootstrap-table.min.css">
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/static/vendor/bootstrap/css/bootstrap.min.css">
+  <!-- Fontawesome CSS -->
+  <link rel="stylesheet" href="/static/vendor/fontawesome/css/all.css">
+  <!-- Custom styles for this template -->
+  <link href="/static/css/simple-sidebar.css" rel="stylesheet">
+  <link href="/static/vendor/summernote/summernote-bs4.css" rel="stylesheet">
+  <!--favicon-->
+  <link rel="icon" type="image/png" href="/static/img/comm.png">
+
+  <!-- JQuery -->
+  <script src="/static/vendor/jquery/jquery.min.js"></script> 
+  <script src="/static/vendor/popper/popper.min.js"></script>
+    
+  <!-- Latest compiled JavaScript -->
+  <script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
+  <!-- Third party javascript -->
+  <script src="/static/vendor/socketio/socket.io.js"></script>
+  <script src="/static/vendor/summernote/summernote-bs4.min.js"></script>
+  <script src="/static/vendor/bootstraptable/bootstrap-table.min.js"></script>
+  <script src="/static/vendor/bootstraptable/locale/bootstrap-table-en-US.min.js"></script>
+  
+  <!-- Javascript file for this application -->
+  <script type="text/javascript" src="/static/js/application.js"></script>
+
+</head>
+
+<body>
+
+    <div class="d-flex" id="wrapper">
+  
+      <!-- Sidebar (from sidenav.html) -->
+      <div id="sidenav"></div>
+  
+      <!-- Page Content -->
+      <div id="page-content-wrapper">
+  
+        <!-- TopMenu (from topmenu.html) -->
+        <div id="topmenu"></div>
+      
+        <div class='container-fluid'>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                </div>
+                <div class="col-md-2" style="margin-top: 1em"></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <!-- <hr class="sidebar-divider" style="margin-top: 1em; margin-bottom: 1em;"> -->
+                <!-- <div id="summernote"></div> -->
+                <!-- <button id="edit" class="btn btn-light" onclick="edit()" type="button">Edit</button> -->
+                <!-- <button id="vidFormButton" class="btn btn-light" onclick="saveText();" >Save</button> -->
+                <h4 class="mt-4">Text Editor:</h4>
+                <hr class="sidebar-divider" style="margin-top: 1em; margin-bottom: 1em;">
+                <div class="click2edit">Click WYSIWYG Editor to enter text...</div>
+                <hr class="sidebar-divider" style="margin-top: 1em; margin-bottom: 1em;">
+                <h4 class="mt-4" id="tokenTitle">Tokenization:</h4>
+                <table id="tokenTable" data-search="true" data-show-columns="true" data-pagination="true" style="display: none; caption-side: top;">
+                  <!-- <caption><span style="width: 100%;text-align: center;"><strong>Tokenization</strong></span></caption> -->
+                  <thead>
+                      <tr>
+                          <th data-field="text" data-sortable="true">Text</th>
+                          <th data-field="lemma" data-sortable="true">Lemma</th>
+                          <th data-field="pos" data-sortable="true">Pos</th>
+                          <th data-field="tag" data-sortable="true">Tag</th>
+                          <th data-field="dep" data-sortable="true">Dep</th>
+                          <th data-field="shape" data-sortable="true">Shape</th>
+                          <th data-field="vector_norm" data-sortable="true">Vector Norm</th>
+                      </tr>
+                  </thead>
+                </table>
+                <hr class="sidebar-divider" style="margin-top: 1em; margin-bottom: 1em;">
+                <h4 class="mt-4" id="nounTitle">Noun Chunks:</h4>
+                <table id="nounTable" data-search="true" data-show-columns="true" data-pagination="true" style="display: none; caption-side: top;">
+                  <!-- <caption><span style="width: 100%;text-align: center;"><strong>Noun Chunks</strong></span></caption> -->
+                  <thead>
+                      <tr>
+                          <th data-field="text" data-sortable="true">Text</th>
+                          <th data-field="rootText" data-sortable="true">Root.Text</th>
+                          <th data-field="rootDep" data-sortable="true">Root.Dep</th>
+                          <th data-field="rootHeadText" data-sortable="true">Root.Head.Text</th>
+                      </tr>
+                  </thead>
+                </table>
+                <hr class="sidebar-divider" style="margin-top: 1em; margin-bottom: 1em;">
+                <h4 class="mt-4" id="entityTitle">Entities:</h4>
+                <table id="entityTable" data-search="true" data-show-columns="true" data-pagination="true" style="display: none; caption-side: top;">
+                  <!-- <caption><span style="width: 100%;text-align: center;"><strong>Entities</strong></span></caption> -->
+                  <thead>                
+                      <tr>
+                          <th data-field="text" data-sortable="true">Text</th>
+                          <th data-field="startChar" data-sortable="true">Start</th>
+                          <th data-field="endChar" data-sortable="true">End</th>
+                          <th data-field="label" data-sortable="true">Label</th>
+                      </tr>
+                  </thead>
+                </table>
+                <hr class="sidebar-divider" style="margin-top: 1em; margin-bottom: 1em;">                
+                <div id="entityDisplay"></div>
+                <hr class="sidebar-divider" style="margin-top: 1em; margin-bottom: 1em;"> 
+                <h4 class="mt-4" id="matchTitle">Matched Phrases:</h4>
+                <div id="matchDisplay"></div>
+            </div>
+            <div class="col-md-2"></div>
+          </div>
+      </div>
+      <!-- /#page-content-wrapper -->
+  
+  </div>
+  <!-- /#wrapper -->
+  <!-- Footer -->
+<hr class="sidebar-divider" style="margin-top: 1em; margin-bottom: 1em;">
+  
+<footer class="py-0 bg-white">
+    <div class="container">
+      <p class="m-0 text-center text-primary">Copyright &copy; TopTech Analytics 2019</p>
+    </div>
+</footer>
+
+<script>
+    $(function(){
+      $("#sidenav").load("/sidenav");
+    });
+</script>
+<script>
+    $(function(){
+      $("#topmenu").load("/topmenu");
+    });
+</script>
+
+</body>
+
+</html>
+
