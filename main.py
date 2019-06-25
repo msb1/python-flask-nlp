@@ -67,15 +67,35 @@ def comm_message(msg):
             print('Error: File does not exist or path is entered incorrectly...')
     
     elif obj['msgType'] == 'matcher':
+        if textobj is None: 
+            print("Matcher called without text...")
+            return
         print(obj['phrase1'], obj['phrase2'], obj['phrase3'])
         phrases = [ obj['phrase1'], obj['phrase2'], obj['phrase3']]
         match = textobj.phrase_matcher(phrases)
         print (match)
         socketio.emit('message', {'type': 'match', 'payload': match}, namespace='/text')
 
+    elif obj['msgType'] == 'sentiment':
+        if textobj is None: 
+            print("Sentiment called without text...")
+            return
+        sentiment = textobj.sentiment()
+        print (sentiment)
+        socketio.emit('message', {'type': 'sentiment', 'payload': sentiment}, namespace='/text')
+
+    elif obj['msgType'] == 'similarity':
+        if textobj is None: 
+            print("Similarity called without initial text for comparison...")
+            return
+        # print(obj['compareText'])
+        similarity = textobj.similarity(obj['compareText'])
+        print (similarity)
+        socketio.emit('message', {'type': 'similarity', 'payload': similarity}, namespace='/text')
+
         
 @socketio.on('message', namespace='/text')
-def comm_message(msg):
+def text_message(msg):
     global plaintext, textobj
     print(">> message received on text socketIO: ", msg) 
     obj = json.loads(msg) 

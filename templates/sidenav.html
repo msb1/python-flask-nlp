@@ -4,6 +4,7 @@
           <a href="#" onClick="edit()" class="list-group-item list-group-item-action bg-light">WYSIWYG Editor</a>
           <a href="#" class="list-group-item list-group-item-action bg-light" data-toggle="modal" data-target="#phraseMatcherModal">Phrase Matcher</a>
           <a href="#" onclick="sentiment()" class="list-group-item list-group-item-action bg-light">Sentiment Analyzer</a>
+          <a href="#" class="list-group-item list-group-item-action bg-light" data-toggle="modal" data-target="#similarityModal">Text Similarity</a>
           <hr class="sidebar-divider">
           <!-- <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
           <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
@@ -44,3 +45,29 @@
             </div>
         </div>
     </div>
+
+    <!-- Phrase Matcher Modal -->
+    <div class="modal fade bd-example-modal-lg" id="similarityModal" tabindex="-1" role="dialog" aria-labelledby="phraseModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document" style="position: absolute; margin-left: 3em; margin-bottom: 3em;">
+          <div class="modal-content">
+            <form>
+              <div class="modal-header">
+                <h5 class="modal-title" id="phraseModalLongTitle">Enter Text for Similarity Scoring:</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">         
+                <div class="form-group">
+                  <label for="compareText">Enter Comparison Text:</label>
+                  <textarea class="form-control" rows="10" cols="80" id="compareText" name="compareText"></textarea>
+                </div>     
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" onclick="similarity()">Compare</button>
+              </div>
+            </form>
+          </div>
+      </div>
+  </div>

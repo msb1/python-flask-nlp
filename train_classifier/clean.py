@@ -52,31 +52,34 @@ def main():
     print('PREPROCESSING DATA - PUNCTUATION CLEANING... elapsed time: {} sec'.format(time.process_time() - start_time))
     # clean training and validation reviews
     # tokenize with current vector space index
-    train_tokens = []
+    # train_tokens = []
     index = 0
-    for text in raw_train_texts:
-        doc = clean_text(nlp(text))
-        train_tokens.append(doc.to_array([ID]))
-        print('Training record cleaned with index: ', index)
-        index += 1
+    with open('amazon_train.dmp', 'wb') as fp:
+        for text in raw_train_texts:
+            doc = clean_text(nlp(text))
+            # train_tokens.append(doc.to_array([ID]))
+            pickle.dump(doc.to_array([ID]), fp)
+            print('Training record cleaned with index: ', index)
+            index += 1
         
-    val_tokens = []
-    for text in raw_val_texts:
-        doc = clean_text(nlp(text))
-        val_tokens.append(doc.to_array([ID]))
-        print('Validation record cleaned with index: ', index)
-        index += 1
+    # val_tokens = []
+    index = 0
+    with open('amazon_val.dmp', 'wb') as fp:
+        for text in raw_val_texts:
+            doc = clean_text(nlp(text))
+            # val_tokens.append(doc.to_array([ID]))
+            pickle.dump(doc.to_array([ID]), fp)
+            print('Validation record cleaned with index: ', index)
+            index += 1
 
     print('PREPROCESSING DATA - COMPLETE... elapsed time: {} sec'.format(time.process_time() - start_time))
 
     # output cleaned text data to  files with binary pickle serialization
-    with open('amazon_train.dmp', 'wb') as fp:
     # with open('imdb_train.dmp', 'wb') as fp:
-        pickle.dump(train_tokens, fp)
+    #     pickle.dump(train_tokens, fp)
 
-    with open('amazon_val.dmp', 'wb') as fp:
     # with open('imdb_val.dmp', 'wb') as fp:
-        pickle.dump(val_tokens, fp)
+    #     pickle.dump(val_tokens, fp)
 
     print('PICKLING - COMPLETE... elapsed time: {} sec'.format(time.process_time() - start_time))
 

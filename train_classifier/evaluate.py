@@ -10,8 +10,8 @@ from sklearn.model_selection import train_test_split
 
 import  tensorflow  as tf
 
-from load_data import load_imdb_sentiment_analysis_dataset
 from nn_models import bilstm
+from clean import clean_text
 
 MAX_LEN = 500
 BATCH_SIZE = 50
@@ -128,10 +128,24 @@ def main():
     model = bilstm(embedding_shape[0], embedding_shape[1], embedding_matrix, MAX_LEN)
     history = model.fit(train_tokens, train_labels, batch_size=BATCH_SIZE, epochs=EPOCHS, validation_data=(val_tokens, val_labels))
 
-    model.save('imdb_bilstm_model.h5')
+    # model.save('imdb_bilstm_model.h5')
 
     print('TRAINING AND VALIDATION COMPLETE... elapsed time: {} sec'.format(time.process_time() - start_time))
     plot(EPOCHS, history.history)
+
+    # text = "Next time you want to visit a world-class art museum, consider Bentonville, Arkansas. Crystal Bridges Museum of American Art is a new must-see in the art world. Its collection includes paintings, sculpture, photography, drawing, and installation art from colonial times to today and features American artists such as Maya Lin, Andrew Wyeth, Jacob Lawrence, Jackson Pollock, and Georgia O’Keeffe. But perhaps the biggest piece of art is the museum itself. Designed by Moshe Safdie, the building blends seamlessly and beautifully into the surrounding Ozark landscape. In addition to the art and architecture collections, there are eight nature trails on the grounds. And admission to the museum is always free."
+    # doc = clean_text(nlp(text))
+    # temp = doc.to_array([ID])
+    # temp_len = len(temp)
+
+    # if temp_len < MAX_LEN:
+    #     temp = np.concatenate((np.zeros(MAX_LEN - temp_len), temp), axis=0).astype(np.int32)
+    # else:
+    #     temp = temp[temp_len - MAX_LEN:].astype(np.int32)
+
+
+    # print("Model prediction", model.predict(np.array([temp]), batch_size=1))
+    # print("Model prediction classes", model.predict_classes(np.array([temp])))
 
 if __name__ == "__main__":
     main()

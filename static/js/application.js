@@ -60,12 +60,18 @@ $(document).ready(function(){
       }
       else if (msg.type == 'match') {
         console.log("tokens: " + msg.payload);
-        // $('#matchTable').show();
-        // $('#matchTable').bootstrapTable({
-        //   data: JSON.parse(msg.payload)
-        // });
         $("#matchDisplay").html(msg.payload);
         $('#matchDisplay').show();
+      }
+      else if (msg.type == 'sentiment') {
+        console.log("tokens: " + msg.payload);
+        $("#sentimentDisplay").html(msg.payload);
+        $('#sentimentDisplay').show();
+      }
+      else if (msg.type == 'similarity') {
+        console.log("tokens: " + msg.payload);
+        $("#similarityDisplay").html(msg.payload);
+        $('#similarityDisplay').show();
       }
       else if (msg.type == 'entityDisplay') {
         // console.log("entityDisplay: " + msg.payload);
@@ -165,7 +171,20 @@ function match() {
   var p2 = document.getElementById('phrase2').value;
   var p3 = document.getElementById('phrase3').value;
   var obj = JSON.stringify({msgType:'matcher', phrase1: p1, phrase2:p2, phrase3:p3});
-	csocket.emit('message', obj);
+  csocket.emit('message', obj);
+}
+
+function similarity() {
+
+  var c1 = document.getElementById('compareText').value;
+  var obj = JSON.stringify({msgType:'similarity', compareText: c1});
+  csocket.emit('message', obj);
+}
+
+function sentiment() {
+
+  var obj = JSON.stringify({msgType:'sentiment', exec: 'True'});
+  csocket.emit('message', obj);
 }
 
 function hideTables() {
@@ -174,5 +193,7 @@ function hideTables() {
   $('#entityTable').hide();
   $('#entityDisplay').hide();
   $('#matchDisplay').hide();
+  $('#sentimentDisplay').hide();
+  $('#similarityDisplay').hide();
 }
 
